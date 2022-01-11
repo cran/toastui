@@ -1,0 +1,168 @@
+---
+title: "Calendar"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Calendar}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(toastui)
+```
+
+<style>
+table {
+  display: table !important;
+}
+</style>
+
+## Usage
+
+Create interactive calendars with:
+
+```{r usage, eval=FALSE}
+calendar()
+```
+
+You can display calendars in interactive R Markdown documents or Shiny applications:
+
+* R Markdown: display calendars that you can navigate and click on schedules to display extra information.
+* Shiny: display calendars where you can edit, update and drag-and-drop schedules.
+
+
+## Monthly calendar
+
+Create a monthly calendar:
+
+* `cal_demo_data()` return a `data.frame` with schedules example
+* `useNavigation = TRUE`: add navigation buttons to change the month displayed
+* `cal_month_options()`: global options for calendar
+* `cal_props()`: set properties for schedules groups (background and text color ...)
+
+```{r monthly}
+calendar(cal_demo_data(), useNavigation = TRUE) %>%
+  cal_month_options(
+    startDayOfWeek  = 1, 
+    narrowWeekend = TRUE
+  ) %>% 
+  cal_props(cal_demo_props())
+```
+
+
+
+## Weekly calendar
+
+Create a weekly calendar:
+
+* `cal_demo_data("week")` return a `data.frame` with schedules example for week
+* `view = "week"`: activate week view for calendar
+* `defaultDate = Sys.Date()`: force calendar to show the specified date (otherwise it shows the current date)
+* `cal_week_options()`: global options for calendar
+* `cal_props()`: set properties for schedules groups (background and text color ...)
+
+```{r weekly}
+calendar(cal_demo_data("week"), view = "week", defaultDate = Sys.Date()) %>% 
+  cal_week_options(
+    startDayOfWeek = 1,
+    workweek = TRUE
+  ) %>% 
+  cal_props(cal_demo_props())
+```
+
+
+
+## Schedules
+
+To add schedules into a calendar who can pass a `data.frame` as first argument to `calendar()`, or use `cal_schedules()` :
+
+```{r schedules, eval=FALSE}
+# Define directly schedules properties
+calendar() %>%
+  cal_schedules(
+    title = "My schedule",
+    start = format(Sys.Date(), "%Y-%m-03 00:00:00"),
+    end = format(Sys.Date(), "%Y-%m-17 00:00:00")
+  )
+
+# Or you can use a data.frame
+my_calendar_data <- data.frame(
+  title = "My schedule",
+  start = format(Sys.Date(), "%Y-%m-03 00:00:00"),
+  end = format(Sys.Date(), "%Y-%m-17 00:00:00")
+)
+calendar() %>%
+  cal_schedules(
+    my_calendar_data
+  )
+```
+
+Properties for schedules are described in table below:
+
+```{r schedules-properties, echo=FALSE}
+datagrid(schedules_properties) %>% 
+  grid_columns(
+    column = "Name", 
+    width = 150,
+    renderer = list(
+      styles = list(
+        fontWeight = "bold"
+      )
+    )
+  ) %>% 
+  grid_columns(
+    column = "Type", 
+    width = 150
+  )
+```
+
+
+
+## Calendar properties
+
+Calendar properties can be used to set common appearance to a group of schedules with the same `calendarId`. 
+
+```{r props, eval=FALSE}
+calendar() %>%
+  cal_schedules(
+    title = "My schedule",
+    calendarId = 123, # <-- set a calendarId
+    start = format(Sys.Date(), "%Y-%m-03 00:00:00"),
+    end = format(Sys.Date(), "%Y-%m-17 00:00:00")
+  ) %>% 
+  cal_props(
+    id = 123, # <-- reference to schedules' calendarId
+    name = "My Calendar",
+    color = "white",
+    bgColor = "darkorange",
+    borderColor = "darkorange"
+  )
+```
+
+
+Properties for calendars are described in table below:
+
+```{r calendar-properties, echo=FALSE}
+datagrid(calendar_properties, bodyHeight = "auto") %>% 
+  grid_columns(
+    column = "Name", 
+    width = 150,
+    renderer = list(
+      styles = list(
+        fontWeight = "bold"
+      )
+    )
+  ) %>% 
+  grid_columns(
+    column = "Type", 
+    width = 150
+  )
+```
+
