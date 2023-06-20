@@ -7,8 +7,8 @@
 
 /*!
  * TOAST UI Grid
- * @version 4.20.0 | Fri Dec 10 2021
- * @author NHN. FE Development Lab
+ * @version 4.21.12 | Fri Jun 16 2023
+ * @author NHN Cloud. FE Development Lab
  * @license MIT
  */
 
@@ -109,6 +109,8 @@ and limitations under the License.
 /*! ./themeConfig */
 
 /*! ./utils */
+
+/*! @license DOMPurify 2.3.9 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/2.3.9/LICENSE */
 
 /*! cpexcel.js (C) 2013-present SheetJS -- http://sheetjs.com */
 

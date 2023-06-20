@@ -13,7 +13,10 @@ cal_week_options(
   showTimezoneCollapseButton = NULL,
   timezonesCollapsed = NULL,
   hourStart = NULL,
-  hourEnd = NULL
+  hourEnd = NULL,
+  scheduleView = TRUE,
+  taskView = FALSE,
+  ...
 )
 }
 \arguments{
@@ -34,6 +37,14 @@ cal_week_options(
 \item{hourStart}{Numeric. Can limit of render hour start.}
 
 \item{hourEnd}{Numeric. Can limit of render hour end.}
+
+\item{scheduleView}{Show the all day and time grid in weekly, daily view.
+The default value is \code{TRUE}. If the value is a vector, it can be \code{"allday"}, \code{"time"}.}
+
+\item{taskView}{Show the milestone and task in weekly, daily view.
+The default value is \code{FALSE}. If the value is a vector, it can be \code{"milestone"}, \code{"task"}.}
+
+\item{...}{Additional options.}
 }
 \value{
 A \code{calendar} htmlwidget.
@@ -42,7 +53,7 @@ A \code{calendar} htmlwidget.
 Options for daily, weekly view.
 }
 \note{
-Online JavaScript documentation: \url{https://nhn.github.io/tui.calendar/latest/WeekOptions/}
+Online JavaScript documentation: \url{https://github.com/nhn/tui.calendar/blob/main/docs/en/apis/options.md#week}
 }
 \examples{
 # Change option for weekly view

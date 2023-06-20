@@ -7,10 +7,6 @@
 #' @param view Default view of calendar. The default value is 'week',
 #'  other possible values are 'month' and 'day'.
 #' @param defaultDate Default date for displaying calendar.
-#' @param taskView Show the milestone and task in weekly, daily view.
-#'  The default value is `FALSE`. If the value is a vector, it can be `"milestone"`, `"task"`.
-#' @param scheduleView Show the all day and time grid in weekly, daily view.
-#'  The default value is `TRUE`. If the value is a vector, it can be `"allday"`, `"time"`.
 #' @param useDetailPopup Logical. Display a pop-up on click with detailed informations about schedules.
 #' @param useCreationPopup Logical. Allow user to create schedules with a pop-up.
 #' @param isReadOnly Calendar is read-only mode and a user can't create and modify any schedule. The default value is true.
@@ -21,11 +17,11 @@
 #' @param elementId Use an explicit element ID for the widget.
 #'
 #' @importFrom htmlwidgets createWidget sizingPolicy
-#' @importFrom htmltools findDependencies
-#' @importFrom shiny icon
 #' @importFrom shinyWidgets html_dependency_bttn
 #'
 #' @export
+#'
+#' @note `taskView` and `scheduleView` arguments have been moved to [cal_week_options()].
 #'
 #' @seealso [calendarOutput()] / [renderCalendar()] for usage in Shiny applications.
 #'
@@ -35,8 +31,6 @@
 calendar <- function(data = NULL,
                      view = c("month", "week", "day"),
                      defaultDate = NULL,
-                     taskView = FALSE,
-                     scheduleView = TRUE,
                      useDetailPopup = TRUE,
                      useCreationPopup = FALSE,
                      isReadOnly = TRUE,
@@ -50,10 +44,8 @@ calendar <- function(data = NULL,
   x <- list_(
     options = list(
       defaultView = match.arg(view),
-      taskView = list1(taskView),
-      scheduleView = list1(scheduleView),
       useDetailPopup = useDetailPopup,
-      useCreationPopup = useCreationPopup,
+      useFormPopup = useCreationPopup,
       isReadOnly = isReadOnly,
       ...,
       usageStatistics = getOption("toastuiUsageStatistics", default = FALSE)
@@ -65,9 +57,8 @@ calendar <- function(data = NULL,
     navigationOptions = navOpts
   )
 
-  dependencies <- NULL
-  if (isTRUE(navigation)) {
-    dependencies <- c(findDependencies(icon("home")), list(html_dependency_bttn()))
+  dependencies <- if (isTRUE(navigation)) {
+    list(html_dependency_bttn())
   }
 
   cal <- createWidget(
@@ -75,9 +66,9 @@ calendar <- function(data = NULL,
     x = x,
     width = width,
     height = height,
-    dependencies = dependencies,
     package = "toastui",
     elementId = elementId,
+    dependencies = dependencies,
     sizingPolicy = sizingPolicy(
       padding = 0,
       defaultWidth = "100%",
@@ -100,7 +91,8 @@ calendar <- function(data = NULL,
 
 #' @importFrom htmltools tagList tags
 calendar_html <- function(id, style, class, ...) {
-  tagList(
+  tags$div(
+    class = "toastui-calendar", style = style, class = class,
     tags$div(
       id = paste0(id, "_menu"),
       tags$span(
@@ -151,7 +143,7 @@ calendar_html <- function(id, style, class, ...) {
 #' @export
 #'
 #' @importFrom htmltools tags doRenderTags
-#' @importFrom shiny icon
+#' @importFrom phosphoricons ph
 #'
 #' @examples
 #' # Use another button style
@@ -187,8 +179,8 @@ calendar_html <- function(id, style, class, ...) {
 #'   )
 #' )
 navigation_options <- function(today_label = "Today",
-                               prev_label = icon("chevron-left"),
-                               next_label = icon("chevron-right"),
+                               prev_label = ph("caret-left"),
+                               next_label = ph("caret-right"),
                                class = "bttn-bordered bttn-sm bttn-primary",
                                bg = NULL,
                                color = NULL,

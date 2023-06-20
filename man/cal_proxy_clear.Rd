@@ -4,12 +4,10 @@
 \alias{cal_proxy_clear}
 \title{Clear calendar with Proxy}
 \usage{
-cal_proxy_clear(proxy, immediately = TRUE)
+cal_proxy_clear(proxy)
 }
 \arguments{
 \item{proxy}{A \code{\link[=calendar_proxy]{calendar_proxy()}} \code{htmlwidget} object.}
-
-\item{immediately}{Render it immediately. Or wait, if you want to add schedule after that for example.}
 }
 \value{
 A \code{calendar_proxy} object.
@@ -29,11 +27,11 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  
+
   output$my_calendar <- renderCalendar({
-    calendar(cal_demo_data(), useNavigation = FALSE)
+    calendar(cal_demo_data(), navigation = FALSE)
   })
-  
+
   observeEvent(input$clear, cal_proxy_clear("my_calendar"))
 }
 
