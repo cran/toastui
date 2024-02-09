@@ -1,6 +1,6 @@
 Package: toastui
 Title: Interactive Tables, Calendars and Charts for the Web
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre", "cph")),
   person("Fanny", "Meyer", role = "aut"),
@@ -15,15 +15,15 @@ Imports: utils, htmlwidgets, htmltools, magrittr, phosphoricons, rlang,
         shiny (>= 1.1.0), shinyWidgets
 Suggests: apexcharter, knitr, rmarkdown, scales, tinytest
 VignetteBuilder: knitr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 URL: https://dreamrs.github.io/toastui/
 BugReports: https://github.com/dreamRs/toastui/issues
 NeedsCompilation: no
-Packaged: 2023-06-20 14:20:22 UTC; perri
+Packaged: 2024-02-07 14:35:34 UTC; victorp
 Author: Victor Perrier [aut, cre, cph],
   Fanny Meyer [aut],
   NHN FE Development Lab [cph] (tui-grid, tui-calendar, tui-chart
     libraries)
 Maintainer: Victor Perrier <victor.perrier@dreamrs.fr>
 Repository: CRAN
-Date/Publication: 2023-06-20 14:40:02 UTC
+Date/Publication: 2024-02-09 10:00:02 UTC
