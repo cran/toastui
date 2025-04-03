@@ -59,6 +59,7 @@ renderCalendar <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @details # Special inputs
 #' The following `input` values will be accessible in the server:
 #' * **input$outputId_data** : contain the data displayed in grid, only available when `datagrid(data_as_input = TRUE)` or when using [grid_editor()]
+#' * **input$outputId_data_filtered** : contain the filtered data displayed in grid, only available when `datagrid(data_as_input = TRUE)` or when using [grid_editor()]
 #' * **input$outputId_validation** : contain results of validation rules applied to data, only available when using `validation` argument in [grid_editor()]
 #'
 #' These other inputs can be defined using other functions:
@@ -123,5 +124,36 @@ chartOutput <- function(outputId, width = "100%", height = "400px"){
 #' @export
 renderChart <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
-  shinyRenderWidget(expr, datagridOutput, env, quoted = TRUE)
+  shinyRenderWidget(expr, chartOutput, env, quoted = TRUE)
 }
+
+
+
+
+#' @title Shiny bindings for [editor()]
+#'
+#' @description Output and render functions for using [editor()] within Shiny
+#' applications and interactive Rmd documents.
+#'
+#' @inheritParams renderCalendar
+#'
+#' @return Output element that can be included in UI. Render function to create output in server.
+#'
+#' @name editor-shiny
+#'
+#' @importFrom htmlwidgets shinyWidgetOutput shinyRenderWidget
+#'
+#' @export
+#'
+#' @example examples/shiny-editor.R
+editorOutput <- function(outputId, width = "100%", height = "600px"){
+  shinyWidgetOutput(outputId, "editor", width, height, package = "toastui", inline = FALSE)
+}
+
+#' @rdname editor-shiny
+#' @export
+renderEditor <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) { expr <- substitute(expr) } # force quoted
+  shinyRenderWidget(expr, editorOutput, env, quoted = TRUE)
+}
+
